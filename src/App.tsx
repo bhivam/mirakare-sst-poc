@@ -71,7 +71,7 @@ function App() {
 
     return (
         <div className="flex justify-center">
-            <div className="flex justify-center flex-col px-8 md:w-full xl:w-1/3">
+            <div className="flex justify-center flex-col px-8 w-full md:w-1/3">
                 <div className="flex flex-row py-2 items-center justify-between">
                     <div className="flex flex-row">
                         <Button variant="contained" onClick={ToggleMic} disabled={isRecording}>
@@ -82,7 +82,7 @@ function App() {
                             Stop
                         </Button>
                     </div>
-                    <div className={`rounded-full bg-${isRecording ? "red" : "gray"}-600 w-5 h-5`}>
+                    <div className={`rounded-full ${isRecording ? "bg-red-500" : "bg-gray-500"} w-5 h-5`}>
                     </div>
                 </div>
                 <p>
