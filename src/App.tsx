@@ -82,7 +82,7 @@ function App() {
                             Stop
                         </Button>
                     </div>
-                    <div className="rounded-full bg-red-600 w-5 h-5">
+                    <div className={`rounded-full bg-${isRecording ? "red" : "gray"}-600 w-5 h-5`}>
                     </div>
                 </div>
                 <p>
