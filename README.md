@@ -9,4 +9,4 @@
 - [] Make UI for dispalying notes and observations prettier.
 - [] Transcription will not always be instant: loading indicator for note
 - [] Better loading indicator for bucketing data
-
+- [] Bad audio format on ios safari

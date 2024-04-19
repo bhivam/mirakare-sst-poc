@@ -115,6 +115,7 @@ export default function NotesPage() {
     recorder.current = new MediaRecorder(stream);
     recorder.current.ondataavailable = (e: BlobEvent) => {
       chunks.push(e.data);
+      console.log(e.data)
     };
 
     recorder.current.onstop = (e: Event) => {

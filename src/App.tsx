@@ -15,14 +15,14 @@ function App() {
       <div className="flex h-full flex-col px-8 w-full md:w-3/4">
         <div className="flex flex-row">
           <div
-            className={`text-5xl font-bold py-3 pr-4 text-black 
+            className={`text-xl xs:text-2xl md:text-5xl sm:text-3xl font-bold py-3 pr-4 text-black 
                         ${tab === 0 ? "" : "text-opacity-25"}`}
             onClick={() => setTab(0)}
           >
             Notes
           </div>
           <div
-            className={`text-5xl font-bold py-3 pr-4 text-black
+            className={`text-xl xs:text-2xl md:text-5xl sm:text-3xl  font-bold py-3 pr-4 text-black
                         ${tab === 1 ? "" : "text-opacity-25"}`}
             onClick={() => setTab(1)}
           >
