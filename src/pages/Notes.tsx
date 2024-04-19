@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { Icon, IconButton } from "@mui/material";
+import { CircularProgress, Fab, Icon } from "@mui/material";
 import { NoteI, ObservationI } from "../types";
 import NoteCard from "../components/NoteCard";
 
@@ -12,9 +12,10 @@ export default function NotesPage() {
 
   const recorder = useRef<MediaRecorder | null>(null);
 
-  const [isRecording, setIsRecording] = useState<boolean>(false);
-  const [canRecord, setCanRecord] = useState<boolean>(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [canRecord, setCanRecord] = useState(false);
   const [notes, setNotes] = useState<NoteI[]>([]);
+  const [isLoadingNote, setIsLoadingNote] = useState(false);
 
   useEffect(scrollToBottom, [notes]);
 
@@ -70,6 +71,8 @@ export default function NotesPage() {
   function GetText(audio_file: File) {
     const form_data = new FormData();
     form_data.append("file", audio_file);
+
+    setIsLoadingNote(true);
     axios
       .post(`${BASE_URL}/dictation/upload`, form_data, {
         headers: {
@@ -93,10 +96,12 @@ export default function NotesPage() {
         });
 
         BucketText(new_note["_id"]);
+        setIsLoadingNote(false);
       })
       .catch((error: Error) => {
         console.log("Error occured while getting transcribed audio:");
         console.log(error);
+        setIsLoadingNote(false);
       });
   }
 
@@ -115,7 +120,7 @@ export default function NotesPage() {
     recorder.current = new MediaRecorder(stream);
     recorder.current.ondataavailable = (e: BlobEvent) => {
       chunks.push(e.data);
-      console.log(e.data)
+      console.log(e.data);
     };
 
     recorder.current.onstop = (e: Event) => {
@@ -166,15 +171,21 @@ export default function NotesPage() {
         )}
         <div ref={bottomRef}></div>
       </div>
-      <div className="flex flex-row items-center justify-center h-[15%]">
-        <IconButton
+      <div className="flex flex-row items-center justify-center h-[15%] relative">
+        <Fab
           onClick={ToggleMic}
-          className="h-[10vh] w-[10vh] bg-gray-100"
+          className="h-[10vh] w-[10vh] bg-gray-100 shadow-md z-40"
         >
           <Icon className={`${isRecording ? "text-red-500" : "text-gray-500"}`}>
             mic
           </Icon>
-        </IconButton>
+        </Fab>
+        {isLoadingNote && (
+          <CircularProgress
+            size="10vh"
+            className="absolute z-50 left-100"
+          ></CircularProgress>
+        )}
       </div>
     </div>
   );
