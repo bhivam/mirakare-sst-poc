@@ -42,7 +42,7 @@ function App() {
               const observations: ObservationI[] = res.data;
               note.observations = observations.map((observation) => ({
                 category: observation.category,
-                date: observation.date,
+                date: new Date(observation.date),
                 note_id: observation.note_id,
                 id: observation.id,
                 details: observation.details,
@@ -84,7 +84,7 @@ function App() {
         setNotes((notes) => {
           notes.push({
             content: new_note["content"],
-            date: new_note["date"],
+            date: new Date(new_note["date"]),
             id: new_note["_id"],
             bucketing: true,
             bucketing_error: false,

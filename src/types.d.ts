@@ -2,7 +2,7 @@ export interface ObservationI {
   category: string;
   date: Date;
   note_id: string;
-  id: string
+  id: string;
   details: string;
 }
 
