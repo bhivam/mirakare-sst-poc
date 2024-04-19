@@ -172,7 +172,7 @@ export default function NotesPage() {
             return <NoteCard {...noteProps} key={note.id}></NoteCard>;
           })
         ) : (
-          <div className="flex w-full h-full justify-center items-center">
+          <div className="flex w-full h-full justify-center items-center text-lg">
             Record some notes!
           </div>
         )}

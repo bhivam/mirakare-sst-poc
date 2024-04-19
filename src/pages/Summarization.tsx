@@ -44,7 +44,13 @@ export default function ObservationPage() {
         className="w-full h-[85%] bg-gray-100 rounded 
                       p-4 text-lg overflow-auto"
       >
-        {summary !== "" && summary}
+        {summary !== "" ? (
+          summary
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            Generate a summary!
+          </div>
+        )}
       </div>
       <div className="w-full h-[15%] flex flex-row items-center justify-center">
         <Button variant="contained" onClick={() => GetSummary(100)}>
