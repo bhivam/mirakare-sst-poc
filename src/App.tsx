@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="box-border flex h-[100vh] w-[100vw] justify-center">
-      <div className="flex h-full flex-col px-8 w-full md:w-3/4">
+      <div className="flex  flex-col px-8 w-full md:w-3/4">
         <div className="flex flex-row">
           <div
             className={`text-xl xs:text-2xl md:text-5xl sm:text-3xl font-bold py-3 pr-4 text-black 

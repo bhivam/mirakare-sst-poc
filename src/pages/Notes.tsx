@@ -154,7 +154,7 @@ export default function NotesPage() {
     SetupAudio();
   }, []);
   return (
-    <div className="h-full">
+    <div className="h-[90vh]">
       <div
         className="flex flex-col overflow-y-auto bg-gray-100 
                       px-1 rounded h-[85%]"
