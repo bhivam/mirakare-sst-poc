@@ -10,4 +10,4 @@
 - [x] [FEAT] Transcription will not always be instant: loading indicator for note
 - [] [FEAT] Better loading indicator for bucketing data
 - [] [BUG] Bad audio format on ios safari
-- [] [BUG] two notes getting pushed at once
+- [x] [BUG] two notes getting pushed at once

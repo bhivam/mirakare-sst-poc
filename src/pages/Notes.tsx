@@ -56,19 +56,20 @@ export default function NotesPage() {
         console.log("Error occured while bucketing note information:");
         console.log(error);
         setNotes((notes) => {
-          notes.forEach((note) => {
+          return notes.map((note) => {
             if (note.id == id) {
               note.bucketing = false;
               note.bucketing_error = true;
             }
+            return note;
           });
-          notes = [...notes];
-          return notes;
         });
       });
   }
 
   function GetText(audio_file: File) {
+    console.log("We are entering the function!");
+
     const form_data = new FormData();
     form_data.append("file", audio_file);
 
@@ -80,19 +81,25 @@ export default function NotesPage() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         const new_note = res.data;
 
         setNotes((notes) => {
-          notes.push({
-            content: new_note["content"],
-            date: new Date(new_note["date"]),
-            id: new_note["_id"],
-            bucketing: true,
-            bucketing_error: false,
-            observations: [],
-          });
-          return [...notes];
+          // if we find that this note already exists in the list, ignore the call to setstate
+          if (notes.find((note) => new_note["!id"] === note.id)) {
+            return notes;
+          }
+
+          return [
+            ...notes,
+            {
+              content: new_note["content"],
+              date: new Date(new_note["date"]),
+              id: new_note["_id"],
+              bucketing: true,
+              bucketing_error: false,
+              observations: [],
+            },
+          ];
         });
 
         BucketText(new_note["_id"]);
