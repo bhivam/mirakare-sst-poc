@@ -1,5 +1,5 @@
 import React from "react";
-import { ObservationI } from "./types";
+import { ObservationI } from "../types";
 
 export default function ObservationCard(
   observation: ObservationI & { idx: number },

@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CircularProgress, IconButton, Icon } from "@mui/material";
 import { NoteI } from "../types";
-import ObservationCard from "../ObservationCard";
+import ObservationCard from "./ObservationCard";
 
 export default function NoteCard(note: NoteI) {
   const [expanded, setExpanded] = useState(true);
+
+  useEffect(
+    () =>
+      note.observations.length === 0 ? setExpanded(false) : setExpanded(true),
+    [],
+  );
 
   function toggleExpansion() {
     setExpanded((expanded) => !expanded);
@@ -17,7 +23,10 @@ export default function NoteCard(note: NoteI) {
 
   return (
     <div className="flex flex-col">
-      <div className="w-full rounded-t bg-gray-200 my-1">
+      <div
+        className={`w-full rounded-t bg-gray-200 my-1
+                      ${expanded ? "" : "rounded-b"}`}
+      >
         <div className="flex flex-row justify-between p-2">
           <div className="w-1/2">{note.content}</div>
           <div className="w-3/8 flex flex-col justify-start items-end text-right">
@@ -38,7 +47,14 @@ export default function NoteCard(note: NoteI) {
         </div>
       </div>
       <div
-        className={`flex flex-col bg-gray-200 rounded-b-lg p-2 ${expanded ? "hidden" : ""}`}
+        className={`flex flex-col bg-gray-200 rounded-b-lg px-2 
+                    ${
+                      expanded
+                        ? "overflow-scroll max-h-[20vh] py-2"
+                        : "max-h-0 overflow-hidden"
+                    }
+                    transition-[max-height] duration-1000 ease-linear
+                    transition-[padding] duration-200 ease-out`}
       >
         {note.observations.map((observation, idx) => (
           <ObservationCard key={observation.id} {...observation} idx={idx} />
