@@ -104,16 +104,19 @@ export default function ObservationPage() {
             </div>
             <div className="w-full h-[25%] flex flex-row items-center gap-4">
                 <div className="h-full w-2/3 flex flex-col justify-between gap-2 pt-2">
-                    <FormLabel>lookback period</FormLabel>
-                    <div className="flex flex-row bg-gray-100 rounded p-1 gap-2 flex-wrap overflow-y-scroll">
-                        {categories.map((category, i) =>
-                            <Chip
-                                key={i}
-                                variant={observationTypes.includes(category) ? "filled" : "outlined"}
-                                onClick={() => handleChipClick(category)}
-                                label={category}
-                            />
-                        )}
+                    <div>
+                        <FormLabel>categories</FormLabel>
+                        <div className="flex flex-row bg-gray-100 rounded p-1 gap-2 flex-wrap overflow-y-scroll">
+                            {categories.map((category, i) =>
+                                <Chip
+                                    key={i}
+                                    variant={observationTypes.includes(category) ? "filled" : "outlined"}
+                                    onClick={() => handleChipClick(category)}
+                                    label={category}
+                                />
+                            )}
+                        </div>
+
                     </div>
                     <div>
                         <Button variant="contained" onClick={
@@ -124,7 +127,7 @@ export default function ObservationPage() {
 
                     </div>
                 </div>
-                <div className="w-1/3 pt-2">
+                <div className="h-full flex flex-col w-1/3 pt-2">
                     <FormLabel>lookback period</FormLabel>
                     <RadioGroup
                         value={lookback}
