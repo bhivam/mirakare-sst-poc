@@ -61,6 +61,7 @@ function UserSelect() {
             position: "bottom-left",
           });
           setName(first_name + " " + last_name);
+
           return;
         }
         const data = { first_name: first_name, last_name: last_name };
@@ -76,7 +77,8 @@ function UserSelect() {
               position: "bottom-left",
             });
           })
-          .catch(() => {
+          .catch((error) => {
+            console.log(error);
             toast.error("Failed to create new user.", {
               position: "bottom-left",
             });

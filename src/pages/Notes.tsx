@@ -19,7 +19,9 @@ export default function NotesPage() {
   const [isLoadingNote, setIsLoadingNote] = useState(false);
 
   useEffect(scrollToBottom, [notes]);
-  useEffect(function () {
+  useEffect(consume_notes, []);
+
+function consume_notes() {
     const user_id: string | null = window.sessionStorage.getItem("user_id");
     if (user_id === null) {
       // indicate to user where select user button is
@@ -29,6 +31,7 @@ export default function NotesPage() {
       .get(`${BASE_URL}/data/notes/${user_id}/-1`)
       .then((res) => {
         const new_notes: NoteI[] = [];
+        // TODO get rid of this
         // eslint-disable-next-line
         res.data.notes.forEach((new_note: any) => {
           new_notes.push({
@@ -44,6 +47,7 @@ export default function NotesPage() {
 
         new_notes.forEach((new_note) => {
           new_note.observations = [];
+          // TODO get rid of this
           // eslint-disable-next-line
           res.data.observations.forEach((observation: any) => {
             if (observation.note_id === new_note._id)
@@ -61,7 +65,7 @@ export default function NotesPage() {
         setNotes(new_notes);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }
 
   function scrollToBottom() {
     if (bottomRef.current !== null) {
