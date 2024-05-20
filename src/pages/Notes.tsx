@@ -28,14 +28,20 @@ export default function NotesPage() {
         }
     }
 
-    function BucketText(id: string) {
+    function BucketText(note_id: string) {
+        const user_id: string | null =  window.sessionStorage.getItem("user_id")
+        if (user_id === null || user_id.length === 0) {
+            // TODO error toast
+            return
+        }
+
         axios
-            .get(`${BASE_URL}/dictation/bucket/${id}/America-New_York`)
+            .get(`${BASE_URL}/dictation/bucket/${note_id}/America-New_York/${user_id}`)
             .then((res) => {
                 console.log(res);
                 setNotes((notes) => {
                     return notes.map((note) => {
-                        if (note.id === id) {
+                        if (note._id === note_id) {
                             note.bucketing = false;
                             note.bucketing_error = false;
 
@@ -44,7 +50,8 @@ export default function NotesPage() {
                                 category: observation.category,
                                 date: new Date(observation.date),
                                 note_id: observation.note_id,
-                                id: observation.id,
+                                user_id: user_id,
+                                _id: observation._id,
                                 details: observation.details,
                             }));
                         }
@@ -57,7 +64,7 @@ export default function NotesPage() {
                 console.log(error);
                 setNotes((notes) => {
                     return notes.map((note) => {
-                        if (note.id == id) {
+                        if (note._id == note_id) {
                             note.bucketing = false;
                             note.bucketing_error = true;
                         }
@@ -69,12 +76,18 @@ export default function NotesPage() {
 
     function GetText(audio_file: File) {
 
+        const user_id: string | null =  window.sessionStorage.getItem("user_id")
+        if (user_id === null || user_id.length === 0) {
+            // TODO error toast
+            return
+        }
+
         const form_data = new FormData();
         form_data.append("file", audio_file);
 
         setIsLoadingNote(true);
         axios
-            .post(`${BASE_URL}/dictation/upload`, form_data, {
+            .post(`${BASE_URL}/dictation/upload/${user_id}`, form_data, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -84,7 +97,7 @@ export default function NotesPage() {
 
                 setNotes((notes) => {
                     // if we find that this note already exists in the list, ignore the call to setstate
-                    if (notes.find((note) => new_note["!id"] === note.id)) {
+                    if (notes.find((note) => new_note["_id"] === note._id)) {
                         return notes;
                     }
 
@@ -93,7 +106,8 @@ export default function NotesPage() {
                         {
                             content: new_note["content"],
                             date: new Date(new_note["date"]),
-                            id: new_note["_id"],
+                            _id: new_note["_id"],
+                            user_id: user_id,
                             bucketing: true,
                             bucketing_error: false,
                             observations: [],
@@ -169,10 +183,12 @@ export default function NotesPage() {
                 {notes.length > 0 ? (
                     notes.map((note) => {
                         const noteProps = { ...note };
-                        return <NoteCard {...noteProps} key={note.id}></NoteCard>;
+                        return <NoteCard {...noteProps} key={note._id}></NoteCard>;
                     })
                 ) : (
-                    <div className="flex w-full h-full justify-center items-center text-lg">
+                    <div
+                        className="flex w-full h-full justify-center items-center text-lg"
+                    >
                         Record some notes!
                     </div>
                 )}

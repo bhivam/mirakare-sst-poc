@@ -32,8 +32,20 @@ export default function ObservationPage() {
         setSummary("");
         setLoading(true);
 
+        const user_id: string | null = window.sessionStorage.getItem("user_id")
+        if (user_id === null || user_id.length === 0) {
+            // TODO Toast, no user set 
+            setLoading(false);
+            return
+        }
+
+        if (observationTypes.length === 0) {
+            // TODO Toast, must have at least one data category selected
+            return
+        }
+
         const res = await fetch(
-            `${BASE_URL}/dictation/summary/`,
+            `${BASE_URL}/dictation/summary`,
             {
                 method: "post",
                 headers: {
@@ -42,7 +54,8 @@ export default function ObservationPage() {
                 },
                 body: JSON.stringify({
                     "lookback": lookback,
-                    "observation_types": observationTypes
+                    "observation_types": observationTypes,
+                    "user_id": user_id,
                 })
             },
         );
