@@ -124,6 +124,7 @@ export default function NotesPage({ user_id }: { user_id: string | null }) {
     }
 
     function GetText(audio_file: File) {
+        
         if (user_id === null || user_id.length === 0) {
             toast.error("Please select a user.", { position: "bottom-left" });
             return;
@@ -198,6 +199,13 @@ export default function NotesPage({ user_id }: { user_id: string | null }) {
             const audio_file: File = new File([blob], "audio_file." + recorder.current?.mimeType.split("/")[1], {
                 type: recorder.current?.mimeType,
             });
+            console.log(URL.createObjectURL(audio_file))
+
+            const audio = new Audio()
+            audio.src = URL.createObjectURL(audio_file)
+            audio.controls = true
+            document.body.appendChild(audio);
+
             GetText(audio_file);
         };
 
