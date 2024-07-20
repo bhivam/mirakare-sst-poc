@@ -192,7 +192,7 @@ export default function NotesPage({ user_id }: { user_id: string | null }) {
 
         recorder.current.onstop = (e: Event) => {
             console.log(e);
-            const blob: Blob = new Blob(chunks, { type: "audio/mpeg" });
+            const blob: Blob = new Blob(chunks, { type: "audio/mp3" });
 
             chunks = [];
             const audio_file: File = new File([blob], "audio_file.mp3", {
