@@ -7,11 +7,17 @@ import SummarizationPage from "./pages/Summarization";
 function App() {
 
     const [tab, setTab] = useState(0);
+    const [userId, setUserId] =
+        useState<string | null>(window.sessionStorage.getItem("user_id"))
 
     const tabs = [
-        { title: "Notes", component: <NotesPage /> },
-        { title: "Summarization", component: <SummarizationPage /> },
+        { title: "Notes", component: <NotesPage user_id={userId} /> },
+        { title: "Q&A", component: <SummarizationPage /> },
     ];
+
+    function update_user_id(new_user_id: string) {
+        setUserId(() => new_user_id)
+    }
 
     return (
         <div className="flex h-[100vh] w-[100vw] justify-center">
@@ -30,11 +36,11 @@ function App() {
                         ${tab === 1 ? "border-solid border-0 border-b-2 border-black" : "text-opacity-25"}`}
                             onClick={() => setTab(1)}
                         >
-                            Summarization
+                            {'Q&A'}
                         </div>
                     </div>
                     <div className="flex flex-col justify-center">
-                        <UserSelect />
+                        <UserSelect update_user_id={update_user_id} />
                     </div>
                 </div>
                 {tabs[tab].component}
