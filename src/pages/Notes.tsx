@@ -193,13 +193,11 @@ export default function NotesPage({ user_id }: { user_id: string | null }) {
 
         recorder.current.onstop = (e: Event) => {
             console.log(e);
-            // const blob: Blob = new Blob(chunks, { type: recorder.current?.mimeType });
-            const blob: Blob = new Blob(chunks, { type: "audio/mp4" });
+            const blob: Blob = new Blob(chunks, { type: "audio/mp4; codecs=mp4a" });
 
             chunks = [];
-            const audio_file: File = new File([blob], "audio_file." + recorder.current?.mimeType.split("/")[1], {
-                // type: recorder.current?.mimeType,
-                type: "audio/mp4",
+            const audio_file: File = new File([blob], "audio_file.mp4", {
+                type: "audio/mp4; codecs=mp4a",
             });
 
             GetText(audio_file);
